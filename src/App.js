@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
+import Modal from 'react-modal'
 
-const CustomToast = ({ closeToast }) => {
-  return (
-    <div>
-      <div>Something went wrong!</div>
-      <button onclick={closeToast}>Close</button>
-    </div>
-  )
-}
+Modal.setAppElement('#root')
 
 function App() {
-  const notify = () => {
-    toast("Wow so easy !");
-    toast.warn(<CustomToast />)
-  }
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   return (
     <div>
-      <button onClick={notify}>Notify !</button>
+      <button onClick={() => setModalIsOpen(true)} >Open</button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        style={
+          {
+            overlay: {
+              backgroundColor: 'grey'
+            },
+            content: {
+              color: 'orange'
+            }
+          }
+        }>
+        <h2>Modal Title</h2>
+        <p>Modal Body</p>
+        <div> <button onClick={() => setModalIsOpen(false)} >Close</button></div>
+      </Modal>
 
     </div>
   );
